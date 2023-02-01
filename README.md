@@ -1,4 +1,4 @@
-## Container Memory Restrictions
+## Container Memory Challenges
 
 ### Background
 Recently we saw  microservice being killed and container restarted in production. It was a service used by customers to setup their autorecharges, and didn't have much load. The behaviour was strange, as it had not be observed earlier. Most of our microservices are springboot applications which are containerized and deployed into AWS ECS. Their memory footprint is small, and we didn't have much trouble running them over the past few years, until we started to observe this strange behaviour for this particular microservice.
@@ -36,8 +36,12 @@ This would install the latest image of Amazon's corretto Java 8, but didn't spec
 
 ```shell
 
-$ java -fullversion
->>TODO<<
+$ java -version
+
+openjdk version "1.8.0_302"
+OpenJDK Runtime Environment Corretto-8.302.08.1 (build 1.8.0_302-b08)
+OpenJDK 64-Bit Server VM Corretto-8.302.08.1 (build 25.302-b08, mixed mode)
+
 
 ```
 As we know, when java application runs it 'sees' the whole memory and all CPU cores available on the system and aligns its resources to it. When run without the -Xms and -Xmx flags, it would set be default as 25% of the system memory. When running under a container, this can be a problem. 
