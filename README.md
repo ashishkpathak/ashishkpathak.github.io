@@ -1,7 +1,7 @@
 ## Container Memory Challenges
 
 ### Background
-Recently we saw  microservice being killed and container restarted in production. It was a service used by customers to setup their autorecharges, and didn't have much load. The behaviour was strange, as it had not be observed earlier. Most of our microservices are springboot applications which are containerized and deployed into AWS ECS. Their memory footprint is small, and we didn't have much trouble running them over the past few years, until we started to observe this strange behaviour for this particular microservice.
+Recently we saw  microservice being killed and container restarted in production. It was a service used by customers to setup their autorecharges, and didn't have much load. The behaviour was strange, as it had not been observed earlier. Most of our microservices are springboot applications which are containerized and deployed into AWS ECS. Their memory footprint is small, and we didn't have much trouble running them over the past few years, until we started to observe this strange behaviour for this particular service.
 
 The production team, had been monitoring the service and suggested there is a memory leak. The application's memory size keeps increasing till the container runs out of memory and it gets restarted.  The support team increased the heap size to see if it helps. It did for sometime, but after a week, the same problem resurfaced.
 
@@ -28,7 +28,7 @@ RUN yum install -y  https://github.com/winebarrel/gcredstash/releases/download/v
 # Set one or more individual labels
 LABEL moa.ms.base.version="0.0.1" \
       moa.ms.base.release-date="2020.02.03" \
-      moa.ms.base.version.is-production="myoptus"
+      moa.ms.base.version.is-production="moa"
 
 ```
 
@@ -47,6 +47,7 @@ OpenJDK 64-Bit Server VM Corretto-8.302.08.1 (build 25.302-b08, mixed mode)
 As we know, when java application runs it 'sees' the whole memory and all CPU cores available on the system and aligns its resources to it. When run without the -Xms and -Xmx flags, it would set be default as 25% of the system memory. When running under a container, this can be a problem. 
 
 Lets check what the default memory allocation is for different JDK versions.
+
 For Java 11 and above
 The Xmx value is 25% of the available memory with a maximum of 25 GB. However, where there is 2 GB or less of physical memory, the value set is 50% of available memory with a minimum value of 16 MB and a maximum value of 512 MB.
 
