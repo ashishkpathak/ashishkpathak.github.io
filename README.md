@@ -128,10 +128,13 @@ from amazoncorretto:8
 Its always better to use SHA hash of image. https://rockbag.medium.com/why-you-should-pin-your-docker-images-with-sha-instead-of-tags-fd132443b8a6
 
 For Java 8 based containers, use the following memory approximation
+
+```sh
 -Xms128m
 -Xmx512m
 -XX:MaxMetaspaceSize=64m
 -XX:MaxDirectMemorySize=512m
+```
 
 The size of container memory should be 512m + 64m + 512m + 256m(buffer). Though these values don't guarantee container's won't be killed, but it does provide a close enough estimation of actual memory consumption.
 
