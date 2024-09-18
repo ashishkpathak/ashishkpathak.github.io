@@ -1,6 +1,7 @@
 ### Blogs
 
-# <a link="blogs/container-memory.MD">Java Memory Challenges in Containerized Apps</a>
+# Java Memory Challenges in Containerized Apps
+<a link="blogs/container-memory.MD">Memory Challenges</a>
 
 
 
