@@ -5,7 +5,7 @@ The original issue began when a microservice in production, responsible for mana
 
 At first, the assumption was straightforward: the application might need more memory. The support team increased the heap size, which provided a temporary fix, but the problem returned within a week. 
 
-<img src="BeforeFix_.png"/>
+<img src="BeforeFix_.PNG"/>
 
 
 The steady increase in memory consumption, followed by the container hitting its limit and being killed, repeated in a predictable pattern. Yet, isolating the issue proved difficult. Ideally, we wanted to reproduce the problem in lower environments to troubleshoot effectively. However, in both SIT and UAT, there were no signs of memory leaks or unexpected restarts. We brought in the performance testing team, who ran continuous tests for 48 hours. Again, no abnormal behavior was observed—no memory spikes, no container restarts. At this point, the investigation became more frustrating. Why was this only happening in production and not in any of the lower environments?
