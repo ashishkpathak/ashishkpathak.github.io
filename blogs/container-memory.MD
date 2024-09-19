@@ -147,7 +147,7 @@ at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:62
 
 ```
 
-Upon further analysis, I discovered that this was caused by a bug in Spring Boot 2.4.1, which was not correctly handing a HTTP header "Content-Type: application/x-www-form-urlencoded".  Majority of requests to API would have a JSON payload and would have "Content-Type: application/json". When this header was encountered, the framework tried to handle the various multi-part http message. More details on this defect can be found here: Spring Framework Issue #26263.
+Upon further analysis, I discovered that this was caused by a bug in Spring Boot 2.4.1, which was not correctly handing a HTTP header "Content-Type: application/x-www-form-urlencoded".  Majority of requests to API would have a JSON payload and would have "Content-Type: application/json". When this header was encountered, the framework tried to handle the various multi-part http message. More details on this defect can be found here: <a href="https://github.com/spring-projects/spring-framework/issues/26263">Spring Framework Issue #26263.</a>
 
 ### Conclusions and Learnings
 
@@ -158,7 +158,14 @@ Tracking down the root cause of memory issues is often a complex and time-consum
 -   Use Image SHA Hash for Consistency: When containerizing applications, use the image's SHA hash instead of relying on a tag like amazoncorretto:8. Tags like these may pull the latest minor version of Java, leading to potential inconsistencies between builds. By using a specific SHA hash, you ensure that every build uses the same exact Java version, leading to more reliable deployments.
 -   Account for Total Memory Usage: When configuring memory for containers, it's essential to consider the full memory requirements of the Java application, not just the heap memory (-Xmx).  Java application can—and often will—consume significantly more memory than the allocated heap. This additional consumption comes from other sources such as the Metaspace, direct memory, thread stacks, and other native resources. These all contribute to the application's overall memory footprint and should be accounted for during container configuration.
 -   Be Mindful of Heap Size Settings: While it's generally safe to trust the Java garbage collector (GC) to manage memory, keep an eye on heap size settings. If an application is started with a large heap size, the JVM will use that space liberally without triggering the GC until memory limits are approached. A better approach is to start with smaller heap sizes and gradually increase them as needed. Striking the right balance between heap memory and GC pauses can be tricky, but ignoring this balance could lead to performance bottlenecks and time-consuming troubleshooting.
--    Memory Settings for Java 8 Containers: For Java 8-based containers, we recommend the following memory settings as an approximation: -Xms128m, -Xmx512m, -XX:MaxMetaspaceSize=64m, and -XX:MaxDirectMemorySize=256m. While these values won't guarantee that the container won’t be killed due to memory issues, they offer a reasonable estimate of the JVM’s memory consumption. Keep in mind that memory for thread stacks, off-heap memory, and the container's own memory usage must also be factored into the total memory allocation.
+-    Memory Settings for Java 8 Containers: For Java 8-based containers, we recommend the following memory settings as an approximation:
+``` property	
+-Xms128m
+-Xmx512m
+-XX:MaxMetaspaceSize=64m
+-XX:MaxDirectMemorySize=256m.
+```
+While these values won't guarantee that the container won’t be killed due to memory issues, they offer a reasonable estimate of the JVM’s memory consumption. Keep in mind that memory for thread stacks, off-heap memory, and the container's own memory usage must also be factored into the total memory allocation.
 
 ### Final Thoughts
 
