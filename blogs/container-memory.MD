@@ -164,7 +164,11 @@ Tracking down the root cause of memory issues is often a complex and time-consum
 -Xmx512m
 -XX:MaxMetaspaceSize=64m
 -XX:MaxDirectMemorySize=256m.
+
+MemoryReservation=1024m
+Memory=1536m
 ```
+
 While these values won't guarantee that the container won’t be killed due to memory issues, they offer a reasonable estimate of the JVM’s memory consumption. Keep in mind that memory for thread stacks, off-heap memory, and the container's own memory usage must also be factored into the total memory allocation.
 
 ### Final Thoughts
