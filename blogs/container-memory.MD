@@ -35,6 +35,17 @@ LABEL moa.ms.base.version="0.0.1" \
 
 This would install the latest image of Amazon’s corretto Java 8, but didn’t specify the exact version (learning number 1) . To find out the full version we hopped on to the container and checked
 
+```shell
+$ java -version
+openjdk version "1.8.0_302"
+OpenJDK Runtime Environment Corretto-8.302.08.1 (build 1.8.0_302-b08)
+OpenJDK 64-Bit Server VM Corretto-8.302.08.1 (build 25.302-b08, mixed mode)
+
+```
+
+This version respected the container limits and with added heap size configuration, we moved to the next step: The container memory configuration.
+
+
 ```property
 
 export JVMXMS="256m"
